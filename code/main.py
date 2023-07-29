@@ -26,27 +26,30 @@ extensions = {
 }
 
 def main():
-    unique = []
     download_foulder_path = os.path.expanduser("~\Downloads")
     for item in os.listdir(download_foulder_path):
 
         item_path = os.path.join(download_foulder_path, item)
 
-        if os.path.isfile(item_path):
-            print("File")
-        else:
-            print("Folder")
-        # file_extension = file.split(".")[-1]
+        if not os.path.isfile(item_path):
+            continue
+
+        file_extension = item.split(".")[-1]
+
+        foulder_name = extensions[file_extension] if file_extension in extensions else "Other"
+        destination = os.path.join(download_foulder_path, foulder_name)
 
 
+        if not os.path.exists(destination):
+            create_new_foulder_in_downloads(foulder_name)
+            print(f"Created {foulder_name} foulder")
 
-
-
+        os.rename(item_path, os.path.join(destination, item))
+        print(f"Moved {item} to {foulder_name} foulder")
 
 
 
 def create_new_foulder_in_downloads(foulder_name):
-
 
     # Replace 'path_to_downloads_folder' with the actual path to the "Downloads" folder
     downloads_folder_path = os.path.expanduser("~\Downloads")
