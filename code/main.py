@@ -1,6 +1,10 @@
 import os
 
 
+# Replace 'path_to_downloads_folder' with the actual path to the "Downloads" folder
+downloads_folder_path = os.path.expanduser("~\Downloads")
+
+
 extensions = {
     "png": "Images",
     "jpg": "Images",
@@ -26,10 +30,10 @@ extensions = {
 }
 
 def main():
-    download_foulder_path = os.path.expanduser("~\Downloads")
-    for item in os.listdir(download_foulder_path):
 
-        item_path = os.path.join(download_foulder_path, item)
+    for item in os.listdir(downloads_folder_path):
+
+        item_path = os.path.join(downloads_folder_path, item)
 
         if not os.path.isfile(item_path):
             continue
@@ -37,7 +41,7 @@ def main():
         file_extension = item.split(".")[-1]
 
         foulder_name = extensions[file_extension] if file_extension in extensions else "Other"
-        destination = os.path.join(download_foulder_path, foulder_name)
+        destination = os.path.join(downloads_folder_path, foulder_name)
 
 
         if not os.path.exists(destination):
@@ -50,10 +54,6 @@ def main():
 
 
 def create_new_foulder_in_downloads(foulder_name):
-
-    # Replace 'path_to_downloads_folder' with the actual path to the "Downloads" folder
-    downloads_folder_path = os.path.expanduser("~\Downloads")
-
 
     # Name of the new folder you want to create
     new_folder_name = foulder_name
