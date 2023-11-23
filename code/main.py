@@ -19,6 +19,7 @@ extensions = {
     "rar": "Compressed",
     "7z": "Compressed",
     "mp4": "Video",
+    "mkv": "Video",
     "txt": "Documents",
     "pdf": "Documents",
     "docx": "Documents",
@@ -27,7 +28,24 @@ extensions = {
     "xlsx": "Documents",
     "csv": "Documents",
     "pptx": "Documents",
+    "db": "DataBases",
+    "c": "Source Code files",
+    "cpp": "Source Code files",
+    "java": "Source Code files",
+    "py": "Source Code files",
+    "js": "Source Code files",
+    "pkt": "Packet Tracer Projects",
+    "html": "Web Files",
+    "css": "Web Files",
+    "xml": "Markup",
+    "json": "Data",
+    "yaml": "Data",
+    "sql": "Database Scripts",
+    "dll": "Dynamic Link Libraries",
+    "bat": "Batch Files",
+    "ps1": "PowerShell Scripts"
 }
+
 
 def main():
 
@@ -43,14 +61,12 @@ def main():
         foulder_name = extensions[file_extension] if file_extension in extensions else "Other"
         destination = os.path.join(downloads_folder_path, foulder_name)
 
-
         if not os.path.exists(destination):
             create_new_foulder_in_downloads(foulder_name)
             print(f"Created {foulder_name} foulder")
 
         os.rename(item_path, os.path.join(destination, item))
         print(f"Moved {item} to {foulder_name} foulder")
-
 
 
 def create_new_foulder_in_downloads(foulder_name):
