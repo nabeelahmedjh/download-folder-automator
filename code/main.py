@@ -2,8 +2,8 @@ import os
 
 
 # Replace 'path_to_downloads_folder' with the actual path to the "Downloads" folder
-downloads_folder_path = os.path.expanduser("~\Downloads")
-
+home_dir = os.path.expanduser('~')
+downloads_folder_path = os.path.join(home_dir, 'Downloads')
 
 extensions = {
     "png": "Images",
@@ -43,7 +43,7 @@ extensions = {
     "sql": "Database Scripts",
     "dll": "Dynamic Link Libraries",
     "bat": "Batch Files",
-    "ps1": "PowerShell Scripts"
+    "ps1": "PowerShell Scripts",
 }
 
 
