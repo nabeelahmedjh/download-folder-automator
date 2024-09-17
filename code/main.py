@@ -1,9 +1,45 @@
 import os
+import ctypes
+from pathlib import Path
+import platform
+
+def get_download_folder() -> str:
+    """
+    Returns the Downloads folder path based on the OS informations.
+
+    Returns:
+        str : the absolute path of the downloads folder
+    """
+    system = platform.system()  # get the os
+
+    if system == "Windows":
+        CSIDL_PERSONAL = 0x0005  # My Documents
+        SHGFP_TYPE_CURRENT = 0   # Get current, not default value
+
+        buf = ctypes.create_unicode_buffer(1024)
+        ctypes.windll.shell32.SHGetFolderPathW(None, CSIDL_PERSONAL,
+                                               None, SHGFP_TYPE_CURRENT, buf)
+
+        return os.path.join(buf.value, 'Downloads')
+
+    elif system == "Darwin":  # macOS
+        return os.path.join(Path.home(), 'Downloads')
+    elif system == "Linux":
+
+        # get the downloading folder path from the configuration
+        xdg_user_dirs = os.path.expanduser('~/.config/user-dirs.dirs')
+        if os.path.exists(xdg_user_dirs):
+            with open(xdg_user_dirs) as f:
+                for line in f:
+                    if 'XDG_DOWNLOAD_DIR' in line:
+                        dll_dir = line.split('=')[-1].strip().replace('"', '')
+                        return os.path.expandvars(dll_dir)
+
+    return os.path.join(Path.home(), 'Downloads')  # default value
 
 
-# Replace 'path_to_downloads_folder' with the actual path to the "Downloads" folder
-downloads_folder_path = os.path.expanduser("~\Downloads")
-
+downloads_folder_path = get_download_folder()
+print(f"Detected Downloads folder = {downloads_folder_path}")
 
 extensions = {
     "png": "Images",
